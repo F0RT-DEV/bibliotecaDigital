@@ -1,79 +1,129 @@
-body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-}
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-}
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
 
-#Livro, #Estudante, #Autor, #Emprestimo {
-    max-width: 800px;
-    margin: 50px 20px 20px 517px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        header {
+            background-color: #4a90e2;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
-h1 {
-    margin-bottom: 20px;
-}
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
 
-.form-group {
-    margin-bottom: 20px;
-}
+        /* Estilo das Seções */
+        section {
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+        section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #4a90e2;
+            text-align: center;
+        }
 
-input[type="text"],
-input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
+        .form-group {
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+        label {
+            font-weight: bold;
+        }
 
-button:hover {
-    background-color: #45a049;
-}
+        input[type="file"] {
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
 
-.success {
-    color: green;
-}
+        button[type="submit"] {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
 
-#visualizacao {
-    background-color: #f7f7f7;
-    padding: 1em;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        button[type="submit"]:hover {
+            background-color: #357ab9;
+        }
 
-#tabela-dados {
-    border-collapse: collapse;
-    width: 100%;
-}
+        p.success {
+            color: #28a745;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
 
-#tabela-dados th,
-#tabela-dados td {
-    border: 1px solid #ddd;
-    padding: 0.5em;
-    text-align: left;
-}
+        /* Estilos da Tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Layout Responsivo */
+        @media (max-width: 768px) {
+            section {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            table th, table td {
+                font-size: 0.9rem;
+            }
+
+            button[type="submit"] {
+                width: 100%;
+            }
+        }
