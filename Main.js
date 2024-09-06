@@ -13,6 +13,9 @@ class Autor {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
     }
+    getNome(){
+        return this.nome;
+    }
 }
 
 class Estudante {
@@ -166,12 +169,18 @@ formCSV1.addEventListener('submit', function (evento1) {
     if (arquivo) {
         lerArquivoCSV(arquivo, function (conteudo) {
             const arrayCSV = converterCSVparaArray(conteudo);
-            arrayCSV.forEach(function (linha, index) {
-                if (index !== 0) { // Ignorar cabeçalho
+            const mensagemErro = document.getElementById('mensagemErro');
+            arrayCSV.forEach(function (linha) {
                     const [id, titulo, autorId, ano] = linha.map(item => item.trim());
-                    const livro = new Livro(id, titulo, autorId, ano);
-                    livros.push(livro);
-                }
+                    const idautor = parseInt(autorId) -1;
+                    if(autores.length>0){
+                        const livro = new Livro(id, titulo, autores[idautor].nome, ano);
+                        livros.push(livro);
+                    }else{
+                        /*mensagemErro.textContent ="Não há autores cadastrados. Envie autores primeiros"*/
+                    }
+                    
+                
             });
             exibirDados('livros');
         });
