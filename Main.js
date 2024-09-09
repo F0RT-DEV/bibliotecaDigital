@@ -40,7 +40,6 @@ const autores = [];
 const estudantes = [];
 const emprestimos = [];
 
-// Função para ler o arquivo CSV
 function lerArquivoCSV(arquivo, callback) {
     const reader = new FileReader();
     reader.onload = function(evento) {
@@ -50,46 +49,19 @@ function lerArquivoCSV(arquivo, callback) {
     reader.readAsText(arquivo);
 }
 
-// Função para converter CSV em Array
 function converterCSVparaArray(conteudo) {
     const linhas = conteudo.split(/\r?\n/); // Aceita \n ou \r\n
     return linhas.map(linha => linha.split(',').map(campo => campo.trim())); // Remove espaços em branco extras
 }
 
-// Função consolidada para exibir dados
 function exibirDados(tipo) {
     let tabela, cabecalho, corpo, titulo;
 
-    if (tipo === 'livros') {
+    if (tipo === 'autores') {
         tabela = document.getElementById('tabelaDados1');
         cabecalho = document.getElementById('cabecalhoTabela1');
         corpo = document.getElementById('corpoTabela1');
         titulo = document.getElementById('tituloSecao1');
-        titulo.textContent = 'Livros';
-        cabecalho.innerHTML = `
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Autor ID</th>
-                <th>Ano</th>
-            </tr>
-        `;
-        livros.forEach(livro => {
-            const linha = document.createElement('tr');
-            linha.innerHTML = `
-                <td>${livro.id}</td>
-                <td>${livro.titulo}</td>
-                <td>${livro.autorId}</td>
-                <td>${livro.ano}</td>
-            `;
-            corpo.appendChild(linha);
-        });
-
-    } else if (tipo === 'autores') {
-        tabela = document.getElementById('tabelaDados2');
-        cabecalho = document.getElementById('cabecalhoTabela2');
-        corpo = document.getElementById('corpoTabela2');
-        titulo = document.getElementById('tituloSecao2');
         titulo.textContent = 'Autores';
         cabecalho.innerHTML = `
             <tr>
@@ -104,6 +76,31 @@ function exibirDados(tipo) {
                 <td>${autor.id}</td>
                 <td>${autor.nome}</td>
                 <td>${autor.dataNascimento}</td>
+            `;
+            corpo.appendChild(linha);
+        });
+
+    }else if (tipo === 'livros') {
+        tabela = document.getElementById('tabelaDados2');
+        cabecalho = document.getElementById('cabecalhoTabela2');
+        corpo = document.getElementById('corpoTabela2');
+        titulo = document.getElementById('tituloSecao2');
+        titulo.textContent = 'Livros';
+        cabecalho.innerHTML = `
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Ano</th>
+            </tr>
+        `;
+        livros.forEach(livro => {
+            const linha = document.createElement('tr');
+            linha.innerHTML = `
+                <td>${livro.id}</td>
+                <td>${livro.titulo}</td>
+                <td>${livro.autorId}</td>
+                <td>${livro.ano}</td>
             `;
             corpo.appendChild(linha);
         });
@@ -140,8 +137,8 @@ function exibirDados(tipo) {
         cabecalho.innerHTML = `
             <tr>
                 <th>ID</th>
-                <th>Estudante ID</th>
-                <th>Livro ID</th>
+                <th>Estudante</th>
+                <th>Livro</th>
                 <th>Data</th>
             </tr>
         `;
@@ -158,54 +155,19 @@ function exibirDados(tipo) {
     }
 }
 
-// Formulário de Livro
 const formCSV1 = document.getElementById('formCSV1');
-formCSV1.addEventListener('submit', function (evento1) {
-    evento1.preventDefault(); // Impede o envio padrão do formulário
-
-    const inputArquivo = document.getElementById('livros');
-    const arquivo = inputArquivo.files[0]; // Seleciona o arquivo CSV
-
-    if (arquivo) {
-        lerArquivoCSV(arquivo, function (conteudo) {
-            const arrayCSV = converterCSVparaArray(conteudo);
-            const mensagemErro = document.getElementById('mensagemErro');
-            arrayCSV.forEach(function (linha) {
-                    const [id, titulo, autorId, ano] = linha.map(item => item.trim());
-                    const idautor = parseInt(autorId) -1;
-                    if(autores.length>0){
-                        const livro = new Livro(id, titulo, autores[idautor].nome, ano);
-                        livros.push(livro);
-                    }else{
-                        /*mensagemErro.textContent ="Não há autores cadastrados. Envie autores primeiros"*/
-                    }
-                    
-                
-            });
-            exibirDados('livros');
-        });
-    } else {
-        console.error("Nenhum arquivo selecionado");
-    }
-});
-
-// Formulário de Autor
-const formCSV2 = document.getElementById('formCSV2');
-formCSV2.addEventListener('submit', function (evento) {
-    evento.preventDefault(); // Impede o envio padrão do formulário
+formCSV1.addEventListener('submit', function (evento) {
+    evento.preventDefault();
 
     const inputArquivo = document.getElementById('autores');
     const arquivo = inputArquivo.files[0]; // Seleciona o arquivo CSV
-
     if (arquivo) {
         lerArquivoCSV(arquivo, function (conteudo) {
             const arrayCSV = converterCSVparaArray(conteudo);
-            arrayCSV.forEach(function (linha, index) {
-                if (index !== 0) { // Ignorar cabeçalho
-                    const [id, nome, dataNascimento] = linha.map(item => item.trim());
-                    const autor = new Autor(id, nome, dataNascimento);
-                    autores.push(autor);
-                }
+            arrayCSV.forEach(function (linha) {
+                const [id, nome, dataNascimento] = linha.map(item => item.trim());
+                const autor = new Autor(id, nome, dataNascimento);
+                autores.push(autor);
             });
             exibirDados('autores');
         });
@@ -214,23 +176,50 @@ formCSV2.addEventListener('submit', function (evento) {
     }
 });
 
-// Formulário de Estudante
+const formCSV2 = document.getElementById('formCSV2');
+formCSV2.addEventListener('submit', function (evento) {
+    evento.preventDefault();
+
+    const inputArquivo = document.getElementById('livros');
+    const arquivo = inputArquivo.files[0];
+    if (arquivo) {
+        lerArquivoCSV(arquivo, function (conteudo) {
+            const arrayCSV = converterCSVparaArray(conteudo);
+            arrayCSV.forEach(function (linha) {
+                const [id, titulo, autorId, ano] = linha.map(item => item.trim());
+                const autor = autores.find(autor => autor.id === autorId);
+                /*o método find() está sendo utilizado no array autores para procurar um autor específico com base no seu id.
+                    Array: autores — Este é o array de objetos Autor.
+                    Callback: autor => autor.id === autorId
+                    A função de callback compara o id de cada objeto autor dentro do array autores com o valor de autorId.
+                    autor: É o objeto atual do array autores que está sendo verificado.
+                    autor.id === autorId: Esta expressão verifica se o id do autor atual é igual ao autorId que foi passado no arquivo CSV.*/
+                if (autor) {
+                    // nessa condição erifique se o autor foi encontrado antes de criar o livro
+                    const livro = new Livro(id, titulo, autor.nome, ano);
+                    livros.push(livro);
+                }
+            });
+            exibirDados('livros');
+        });
+    } else {
+        console.error("Nenhum arquivo selecionado");
+    }
+});
+
 const formCSV3 = document.getElementById('formCSV3');
 formCSV3.addEventListener('submit', function (evento) {
     evento.preventDefault(); // Impede o envio padrão do formulário
 
     const inputArquivo = document.getElementById('estudantes');
-    const arquivo = inputArquivo.files[0]; // Seleciona o arquivo CSV
-
+    const arquivo = inputArquivo.files[0];
     if (arquivo) {
         lerArquivoCSV(arquivo, function (conteudo) {
             const arrayCSV = converterCSVparaArray(conteudo);
-            arrayCSV.forEach(function (linha, index) {
-                if (index !== 0) { // Ignorar cabeçalho
-                    const [id, nome, curso] = linha.map(item => item.trim());
-                    const estudante = new Estudante(id, nome, curso);
-                    estudantes.push(estudante);
-                }
+            arrayCSV.forEach(function (linha) {
+                const [id, nome, curso] = linha.map(item => item.trim());
+                const estudante = new Estudante(id, nome, curso);
+                estudantes.push(estudante);
             });
             exibirDados('estudantes');
         });
@@ -239,21 +228,21 @@ formCSV3.addEventListener('submit', function (evento) {
     }
 });
 
-// Formulário de Empréstimo
 const formCSV4 = document.getElementById('formCSV4');
 formCSV4.addEventListener('submit', function (evento) {
-    evento.preventDefault(); // Impede o envio padrão do formulário
+    evento.preventDefault();
 
     const inputArquivo = document.getElementById('emprestimo');
-    const arquivo = inputArquivo.files[0]; // Seleciona o arquivo CSV
-
+    const arquivo = inputArquivo.files[0];
     if (arquivo) {
         lerArquivoCSV(arquivo, function (conteudo) {
             const arrayCSV = converterCSVparaArray(conteudo);
-            arrayCSV.forEach(function (linha, index) {
-                if (index !== 0) { // Ignorar cabeçalho
-                    const [id, estudanteId, livroId, data] = linha.map(item => item.trim());
-                    const emprestimo = new Emprestimo(id, estudanteId, livroId, data);
+            arrayCSV.forEach(function (linha) {
+                const [id, estudanteId, livroId, data] = linha.map(item => item.trim());
+                const estudante = estudantes.find(estudante => estudante.id === estudanteId);
+                const livro = livros.find(livro => livro.id === livroId);
+                if (estudante && livro) {
+                    const emprestimo = new Emprestimo(id, estudante.nome, livro.titulo, data);
                     emprestimos.push(emprestimo);
                 }
             });

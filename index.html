@@ -11,18 +11,16 @@
     <header>
         <h1>BIBLIOTECA DIGITAL</h1>
     </header>
-
-    <section id="Livro">
-        <h1>Upload de Livro</h1>
+    
+    <section id="Autor">
+        <h1>Upload de Autor</h1>
         <form id="formCSV1" action="#" method="post">
             <div class="form-group">
-                <label for="livros">Arquivo:</label>
-                <input type="file" id="livros" accept=".csv">
+                <label for="autores">Arquivo:</label>
+                <input type="file" id="autores" accept=".csv">
             </div>
             <button type="submit">Enviar Arquivo</button>
-            <p class="success">Arquivos enviados: Livro.csv</p>
-
-            <div id="mensagemErro" class="error"></div>
+            <p class="success">Arquivos enviados: Autor.csv</p>
         </form>
 
         <div id="visualizacao">
@@ -34,15 +32,17 @@
         </div>
     </section>
 
-    <section id="Autor">
-        <h1>Upload de Autor</h1>
+    <section id="Livro">
+        <h1>Upload de Livro</h1>
         <form id="formCSV2" action="#" method="post">
             <div class="form-group">
-                <label for="autores">Arquivo:</label>
-                <input type="file" id="autores" accept=".csv">
+                <label for="livros">Arquivo:</label>
+                <input type="file" id="livros" accept=".csv">
             </div>
             <button type="submit">Enviar Arquivo</button>
-            <p class="success">Arquivos enviados: Autor.csv</p>
+            <p class="success">Arquivos enviados: Livro.csv</p>
+
+            <div id="mensagemErro" class="error"></div>
         </form>
 
         <div id="visualizacao">
