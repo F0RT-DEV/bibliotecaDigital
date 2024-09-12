@@ -170,6 +170,7 @@ formCSV1.addEventListener('submit', function (evento) {
                 autores.push(autor);
             });
             exibirDados('autores');
+            document.getElementById('mensagemEnvio1').textContent = `Arquivo enviado: ${arquivo.name}`;
         });
     } else {
         console.error("Nenhum arquivo selecionado");
@@ -201,6 +202,7 @@ formCSV2.addEventListener('submit', function (evento) {
                 }
             });
             exibirDados('livros');
+            document.getElementById('mensagemEnvio2').textContent = `Arquivo enviado: ${arquivo.name}`;
         });
     } else {
         console.error("Nenhum arquivo selecionado");
@@ -222,6 +224,7 @@ formCSV3.addEventListener('submit', function (evento) {
                 estudantes.push(estudante);
             });
             exibirDados('estudantes');
+            document.getElementById('mensagemEnvio3').textContent = `Arquivo enviado: ${arquivo.name}`;
         });
     } else {
         console.error("Nenhum arquivo selecionado");
@@ -247,6 +250,7 @@ formCSV4.addEventListener('submit', function (evento) {
                 }
             });
             exibirDados('emprestimo');
+            document.getElementById('mensagemEnvio3').textContent = `Arquivo enviado: ${arquivo.name}`;
         });
     } else {
         console.error("Nenhum arquivo selecionado");
