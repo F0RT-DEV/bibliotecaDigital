@@ -188,7 +188,6 @@ function configurarBotoes(tipo) {
     });
 }
 
-
 const formCSV1 = document.getElementById('formCSV1');
 formCSV1.addEventListener('submit', function (evento) {
     evento.preventDefault();
