@@ -155,6 +155,40 @@ function exibirDados(tipo) {
     }
 }
 
+function configurarBotoes(tipo) {
+    let botaoMostrar, botaoOcultar, visualizacao;
+
+    if (tipo === 'autores') {
+        botaoMostrar = document.getElementById('mostrarTabelaAutores');
+        botaoOcultar = document.getElementById('ocultarTabelaAutores');
+        visualizacao = document.getElementById('visualizacaoAutor');
+    } else if (tipo === 'livros') {
+        botaoMostrar = document.getElementById('mostrarTabelaLivros');
+        botaoOcultar = document.getElementById('ocultarTabelaLivros');
+        visualizacao = document.getElementById('visualizacaoLivro');
+    } else if (tipo === 'estudantes') {
+        botaoMostrar = document.getElementById('mostrarTabelaEstudantes');
+        botaoOcultar = document.getElementById('ocultarTabelaEstudantes');
+        visualizacao = document.getElementById('visualizacaoEstudante');
+    } else if (tipo === 'emprestimo') {
+        botaoMostrar = document.getElementById('mostrarTabelaEmprestimo');
+        botaoOcultar = document.getElementById('ocultarTabelaEmprestimo');
+        visualizacao = document.getElementById('visualizacaoEmprestimo');
+    }
+
+    botaoMostrar.style.display = 'inline';
+    botaoOcultar.style.display = 'inline';
+
+    botaoMostrar.addEventListener('click', function () {
+        visualizacao.style.display = 'block';
+    });
+
+    botaoOcultar.addEventListener('click', function () {
+        visualizacao.style.display = 'none';
+    });
+}
+
+
 const formCSV1 = document.getElementById('formCSV1');
 formCSV1.addEventListener('submit', function (evento) {
     evento.preventDefault();
@@ -171,6 +205,7 @@ formCSV1.addEventListener('submit', function (evento) {
             });
             exibirDados('autores');
             document.getElementById('mensagemEnvio1').textContent = `Arquivo enviado: ${arquivo.name}`;
+            configurarBotoes('autores');
         });
     } else {
         console.error("Nenhum arquivo selecionado");
@@ -203,6 +238,7 @@ formCSV2.addEventListener('submit', function (evento) {
             });
             exibirDados('livros');
             document.getElementById('mensagemEnvio2').textContent = `Arquivo enviado: ${arquivo.name}`;
+            configurarBotoes('livros');
         });
     } else {
         console.error("Nenhum arquivo selecionado");
@@ -225,6 +261,7 @@ formCSV3.addEventListener('submit', function (evento) {
             });
             exibirDados('estudantes');
             document.getElementById('mensagemEnvio3').textContent = `Arquivo enviado: ${arquivo.name}`;
+            configurarBotoes('estudantes');
         });
     } else {
         console.error("Nenhum arquivo selecionado");
@@ -250,7 +287,8 @@ formCSV4.addEventListener('submit', function (evento) {
                 }
             });
             exibirDados('emprestimo');
-            document.getElementById('mensagemEnvio3').textContent = `Arquivo enviado: ${arquivo.name}`;
+            document.getElementById('mensagemEnvio4').textContent = `Arquivo enviado: ${arquivo.name}`;
+            configurarBotoes('emprestimo');
         });
     } else {
         console.error("Nenhum arquivo selecionado");
