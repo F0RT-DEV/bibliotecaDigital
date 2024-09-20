@@ -40,13 +40,13 @@ const autores = [];
 const estudantes = [];
 const emprestimos = [];
 
-function lerArquivoCSV(arquivo, callback) {
-    const reader = new FileReader();
-    reader.onload = function(evento) {
-        const conteudo = evento.target.result;
-        callback(conteudo);
+function lerArquivoCSV(arquivo, callback) {         //Aqui estamos definindo uma função chamada lerArquivoCSV, que recebe dois parâmetros: arquivo (representa o arquivo CSV a ser lido) e callback (uma função que será chamada quando a leitura do arquivo for concluída)
+    const reader = new FileReader();               //Este código cria uma nova instância de FileReader, que é uma API JavaScript para ler o conteúdo de arquivos locais no navegador. Ele permite que o conteúdo de arquivos (como texto ou binários) seja lido de várias maneiras.
+    reader.onload = function(evento) {            //Estamos definindo um manipulador de evento (onload) para o FileReader. Este manipulador será executado quando o processo de leitura do arquivo for concluído com sucesso. O parâmetro evento contém informações sobre o evento de carregamento, como o conteúdo lido.
+        const conteudo = evento.target.result;   //Nesta linha, estamos acessando o resultado da leitura do arquivo usando evento.target.result e armazenando esse conteúdo na variável conteudo. No caso de readAsText, o conteúdo será uma string com o texto do arquivo.
+        callback(conteudo);                     //Aqui, estamos chamando a função callback passada como parâmetro para a função lerArquivoCSV. Passamos o conteudo do arquivo como argumento para essa função, permitindo que o código fora dessa função possa processar o conteúdo do CSV assim que ele for lido.
     };
-    reader.readAsText(arquivo);
+    reader.readAsText(arquivo);               //estamos iniciando a leitura do arquivo usando o método readAsText do FileReader, que lê o conteúdo do arquivo como texto. O arquivo passado como parâmetro é o arquivo selecionado que será lido.
 }
 
 function converterCSVparaArray(conteudo) {
@@ -57,9 +57,9 @@ function converterCSVparaArray(conteudo) {
 function exibirDados(tipo) {
     let tabela, cabecalho, corpo, titulo;
 
-    if (tipo === 'autores') {
+    if (tipo === 'autores') {          //Estamos selecionando elementos da página HTML pelo seu ID e atribuindo-os às variáveis apropriadas: 
         tabela = document.getElementById('tabelaDados1');
-        cabecalho = document.getElementById('cabecalhoTabela1');
+        cabecalho = document.getElementById('cabecalhoTabela1'); 
         corpo = document.getElementById('corpoTabela1');
         titulo = document.getElementById('tituloSecao1');
         titulo.textContent = 'Autores';
@@ -69,15 +69,15 @@ function exibirDados(tipo) {
                 <th>Nome</th>
                 <th>Data de Nascimento</th>
             </tr>
-        `;
-        autores.forEach(autor => {
-            const linha = document.createElement('tr');
+        `;                                  //O conteúdo HTML do cabecalho da tabela é definido diretamente. Estamos inserindo uma linha (<tr>) com três células de cabeçalho (<th>), que representam as colunas da tabela: "ID", "Nome" e "Data de Nascimento". Isso define os títulos das colunas da tabela
+        autores.forEach(autor => {         //Aqui estamos iterando sobre o array autores, que contém uma lista de objetos do tipo Autor. Para cada autor no array, o código dentro desse bloco será executado.
+            const linha = document.createElement('tr');       //Aqui estamos iterando sobre o array autores, que contém uma lista de objetos do tipo Autor. Para cada autor no array, o código dentro desse bloco será executado.
             linha.innerHTML = `
                 <td>${autor.id}</td>
                 <td>${autor.nome}</td>
                 <td>${autor.dataNascimento}</td>
-            `;
-            corpo.appendChild(linha);
+            `;                             //Estamos definindo o conteúdo da linha recém-criada (<tr>) usando a propriedade innerHTML. A linha contém três células (<td>)
+            corpo.appendChild(linha);     //Depois de criar e preencher a linha com os dados do autor, ela é anexada ao corpo da tabela, ou seja, o elemento HTML responsável por armazenar as linhas de dados da tabela
         });
 
     }else if (tipo === 'livros') {
@@ -156,7 +156,7 @@ function exibirDados(tipo) {
 }
 
 function configurarBotoes(tipo) {
-    let botaoMostrar, botaoOcultar, visualizacao;
+    let botaoMostrar, botaoOcultar, visualizacao;          //Aqui estamos declarando três variáveis: botaoMostrar, botaoOcultar e visualizacao. Essas variáveis serão usadas para armazenar os elementos HTML correspondentes aos botões de "mostrar" e "ocultar", e a área de visualização dos dados.
 
     if (tipo === 'autores') {
         botaoMostrar = document.getElementById('mostrarTabelaAutores');
@@ -176,35 +176,35 @@ function configurarBotoes(tipo) {
         visualizacao = document.getElementById('visualizacaoEmprestimo');
     }
 
-    botaoMostrar.style.display = 'inline';
+    botaoMostrar.style.display = 'inline';                       //Aqui estamos definindo o estilo CSS dos botões de "mostrar" e "ocultar", tornando-os visíveis na página ao definir a propriedade display como inline. Isso faz com que os botões sejam exibidos em linha no layout da página
     botaoOcultar.style.display = 'inline';
 
-    botaoMostrar.addEventListener('click', function () {
+    botaoMostrar.addEventListener('click', function () {      //Esta linha adiciona um evento de clique ao botão botaoMostrar. Quando o botão for clicado, ele executa uma função anônima que define o estilo CSS da visualizacao para display: block, o que exibe o conteúdo da área de visualização (a tabela ou a seção correspondente).
         visualizacao.style.display = 'block';
     });
 
     botaoOcultar.addEventListener('click', function () {
-        visualizacao.style.display = 'none';
+        visualizacao.style.display = 'none';             //Aqui estamos adicionando um evento de clique ao botão botaoOcultar. Quando este botão for clicado, a função anônima será executada, definindo o estilo CSS da visualizacao para display: none, o que oculta o conteúdo da tabela ou da seção.
     });
 }
 
 const formCSV1 = document.getElementById('formCSV1');
-formCSV1.addEventListener('submit', function (evento) {
-    evento.preventDefault();
+formCSV1.addEventListener('submit', function (evento) {              //Aqui estamos adicionando um "ouvinte" para o evento de submit (envio) no formulário. Quando o formulário for enviado, a função anônima será executada. O parâmetro evento representa o evento de envio do formulário.
+    evento.preventDefault();                                        //Esta linha impede o comportamento padrão do formulário HTML, que normalmente recarregaria a página ao ser enviado. O uso de preventDefault() permite processar o envio de dados via JavaScript sem recarregar a página.
 
     const inputArquivo = document.getElementById('autores');
-    const arquivo = inputArquivo.files[0]; // Seleciona o arquivo CSV
+    const arquivo = inputArquivo.files[0];                              //Acessamos a lista de arquivos enviados pelo usuário através da propriedade files do input. Pegamos o primeiro arquivo da lista (no caso, o CSV) e armazenamos na variável arquivo
     if (arquivo) {
-        lerArquivoCSV(arquivo, function (conteudo) {
-            const arrayCSV = converterCSVparaArray(conteudo);
-            arrayCSV.forEach(function (linha) {
-                const [id, nome, dataNascimento] = linha.map(item => item.trim());
-                const autor = new Autor(id, nome, dataNascimento);
-                autores.push(autor);
-            });
-            exibirDados('autores');
-            document.getElementById('mensagemEnvio1').textContent = `Arquivo enviado: ${arquivo.name}`;
-            configurarBotoes('autores');
+        lerArquivoCSV(arquivo, function (conteudo) {                                                //Chamamos a função lerArquivoCSV, passando o arquivo selecionado como argumento. A função lerArquivoCSV lê o arquivo CSV e, quando a leitura for concluída, executa a função de callback que processa o conteúdo lido (armazenado em conteudo)
+            const arrayCSV = converterCSVparaArray(conteudo);                                      //Após a leitura do arquivo, o conteúdo é convertido para um array de linhas de dados CSV (provavelmente uma matriz, onde cada linha é representada como um array de valores). Isso é feito através da função converterCSVparaArray, que recebe o conteúdo do CSV como string e retorna um array.
+            arrayCSV.forEach(function (linha) {                                                   //Aqui, estamos iterando sobre cada linha do array CSV. Para cada linha do CSV, a função de callback será executada
+                const [id, nome, dataNascimento] = linha.map(item => item.trim());               //Estamos desestruturando a linha do array em três variáveis: id, nome e dataNascimento. A função map é aplicada para remover espaços em branco de cada valor (item.trim()). Cada linha do CSV é dividida em três partes, correspondentes aos campos que queremos (ID, Nome e Data de Nascimento)
+                const autor = new Autor(id, nome, dataNascimento);                              //Aqui, estamos criando uma nova instância da classe Autor, passando id, nome e dataNascimento como parâmetros para o construtor. Isso transforma os dados da linha em um objeto Autor
+                autores.push(autor);                                                           //O objeto autor recém-criado é adicionado ao array autores, que provavelmente contém a lista de todos os autores que estão sendo lidos do CSV.
+            });                                                                                               
+            exibirDados('autores');                                                                             //a função exibirDados('autores') é chamada para atualizar a tabela ou a visualização de dados na interface com a lista de autores
+            document.getElementById('mensagemEnvio1').textContent = `Arquivo enviado: ${arquivo.name}`;        //Aqui, estamos atualizando o conteúdo do elemento HTML com o ID mensagemEnvio1, inserindo uma mensagem que informa o nome do arquivo enviado (arquivo.name).
+            configurarBotoes('autores');    //Chamando a função configurar botão
         });
     } else {
         console.error("Nenhum arquivo selecionado");
@@ -223,14 +223,10 @@ formCSV2.addEventListener('submit', function (evento) {
             arrayCSV.forEach(function (linha) {
                 const [id, titulo, autorId, ano] = linha.map(item => item.trim());
                 const autor = autores.find(autor => autor.id === autorId);
-                /*o método find() está sendo utilizado no array autores para procurar um autor específico com base no seu id.
-                    Array: autores — Este é o array de objetos Autor.
-                    Callback: autor => autor.id === autorId
-                    A função de callback compara o id de cada objeto autor dentro do array autores com o valor de autorId.
-                    autor: É o objeto atual do array autores que está sendo verificado.
-                    autor.id === autorId: Esta expressão verifica se o id do autor atual é igual ao autorId que foi passado no arquivo CSV.*/
+                /*o método find() está sendo utilizado no array autores para procurar um autor específico com base no seu id; Array: autores — Este é o array de objetos Autor; Callback: autor => autor.id === autorId está função de callback compara o id de cada objeto autor dentro do array autores com o valor de autorId.
+                    autor: É o objeto atual do array autores que está sendo verificado; autor.id === autorId: Esta expressão verifica se o id do autor atual é igual ao autorId que foi passado no arquivo CSV.*/
                 if (autor) {
-                    // nessa condição erifique se o autor foi encontrado antes de criar o livro
+                    // nessa condição verifica-se o autor foi encontrado antes de criar o livro
                     const livro = new Livro(id, titulo, autor.nome, ano);
                     livros.push(livro);
                 }
@@ -246,7 +242,7 @@ formCSV2.addEventListener('submit', function (evento) {
 
 const formCSV3 = document.getElementById('formCSV3');
 formCSV3.addEventListener('submit', function (evento) {
-    evento.preventDefault(); // Impede o envio padrão do formulário
+    evento.preventDefault();
 
     const inputArquivo = document.getElementById('estudantes');
     const arquivo = inputArquivo.files[0];
